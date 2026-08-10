@@ -63,5 +63,6 @@ npx gh-pages -d out -m "Deploy site to GitHub Pages"
 ## Notes
 
 - Imagery is under `public/images/`.
-- Contact form is client-side only for now.
+- Contact form uses [FormSubmit](https://formsubmit.co) to email `info@pjbumitech.com` (override with `NEXT_PUBLIC_CONTACT_EMAIL`).
+  - First submission sends an activation link to that inbox — click it once to enable delivery.
 - Internal project status: `/internal/projects` (not linked publicly).

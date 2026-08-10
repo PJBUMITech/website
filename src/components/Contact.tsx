@@ -3,6 +3,9 @@
 import { SiteImage as Image } from "@/components/SiteImage";
 import { FormEvent, useState } from "react";
 
+const CONTACT_EMAIL =
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "info@pjbumitech.com";
+
 const offices = [
   {
     entity: "PJBUMI Technologies Sdn. Bhd.",
@@ -32,12 +35,68 @@ const offices = [
   },
 ];
 
-export function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+type Status = "idle" | "sending" | "success" | "error";
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+export function Contact() {
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
+    const form = event.currentTarget;
+    const data = new FormData(form);
+
+    // Honeypot — bots fill this; humans leave it empty
+    if (String(data.get("_gotcha") ?? "").trim()) {
+      setStatus("success");
+      form.reset();
+      return;
+    }
+
+    setStatus("sending");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch(
+        `https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_EMAIL)}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            name: data.get("name"),
+            email: data.get("email"),
+            message: data.get("message"),
+            _subject: "New inquiry from PJBUMI Tech website",
+            _template: "table",
+            _captcha: "false",
+          }),
+        },
+      );
+
+      const result = (await response.json().catch(() => null)) as {
+        success?: string | boolean;
+        message?: string;
+      } | null;
+
+      if (!response.ok) {
+        throw new Error(
+          result?.message ?? "Unable to send your message right now.",
+        );
+      }
+
+      setStatus("success");
+      form.reset();
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Unable to send your message right now.",
+      );
+    }
   }
 
   return (
@@ -71,10 +130,10 @@ export function Contact() {
             </a>
             <span className="mx-3 text-white/30">|</span>
             <a
-              href="mailto:info@pjbumitech.com"
+              href={`mailto:${CONTACT_EMAIL}`}
               className="transition hover:text-white"
             >
-              info@pjbumitech.com
+              {CONTACT_EMAIL}
             </a>
           </p>
         </div>
@@ -84,6 +143,14 @@ export function Contact() {
             onSubmit={onSubmit}
             className="space-y-4 rounded-sm border border-white/15 bg-white/5 p-6 sm:p-8"
           >
+            <input
+              type="text"
+              name="_gotcha"
+              tabIndex={-1}
+              autoComplete="off"
+              className="hidden"
+              aria-hidden
+            />
             <label className="block">
               <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.14em] text-white/55">
                 Name
@@ -91,7 +158,8 @@ export function Contact() {
               <input
                 required
                 name="name"
-                className="w-full rounded-sm border border-white/20 bg-navy/40 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-brand"
+                disabled={status === "sending"}
+                className="w-full rounded-sm border border-white/20 bg-navy/40 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-brand disabled:opacity-60"
                 placeholder="Your name"
               />
             </label>
@@ -103,7 +171,8 @@ export function Contact() {
                 required
                 type="email"
                 name="email"
-                className="w-full rounded-sm border border-white/20 bg-navy/40 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-brand"
+                disabled={status === "sending"}
+                className="w-full rounded-sm border border-white/20 bg-navy/40 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-brand disabled:opacity-60"
                 placeholder="you@company.com"
               />
             </label>
@@ -115,19 +184,34 @@ export function Contact() {
                 required
                 name="message"
                 rows={5}
-                className="w-full resize-y rounded-sm border border-white/20 bg-navy/40 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-brand"
+                disabled={status === "sending"}
+                className="w-full resize-y rounded-sm border border-white/20 bg-navy/40 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-brand disabled:opacity-60"
                 placeholder="Tell us about your project or inquiry"
               />
             </label>
             <button
               type="submit"
-              className="rounded-sm bg-brand px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-brand-hover"
+              disabled={status === "sending"}
+              className="rounded-sm bg-brand px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-brand-hover disabled:cursor-not-allowed disabled:opacity-70"
             >
-              Submit Inquiry
+              {status === "sending" ? "Sending…" : "Submit Inquiry"}
             </button>
-            {submitted && (
+            {status === "success" && (
               <p className="text-sm text-emerald-300">
-                Thank you. Our team will follow up with you shortly.
+                Thank you. Your message has been sent — our team will follow up
+                shortly.
+              </p>
+            )}
+            {status === "error" && (
+              <p className="text-sm text-red-300">
+                {errorMessage} You can also email us directly at{" "}
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className="underline underline-offset-2"
+                >
+                  {CONTACT_EMAIL}
+                </a>
+                .
               </p>
             )}
           </form>
