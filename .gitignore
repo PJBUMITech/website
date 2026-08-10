@@ -39,3 +39,21 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local/source image working files (not used by the site)
+public/images/*-presentable.*
+public/images/*-upscaled.*
+public/images/outdoor-sky-empty.png
+public/images/regid-drone-studio.png
+public/images/drone-regid-flying-v3-ai.png
+public/images/drone-regid-flying-v5.png
+public/images/satellite-constellation-hq-v2.png
+public/images/satellite-constellation-hq-v3-stars.png
+public/images/satellite-constellation-image.png
+public/images/mercap-brochure-hq.png
+public/images/Genset-removebg-preview.png
+public/images/ReGiD_Mk-X3v3*.png
+public/images/hydrogen-genset-presentable.png
+public/images/hydrogen-tech.jpg
+public/images/space-capsule.jpg
+.github/workflows/
