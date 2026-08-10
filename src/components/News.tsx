@@ -1,3 +1,5 @@
+import { asset } from "@/lib/asset";
+
 export type NewsItem = {
   date: string;
   source: string;
@@ -86,7 +88,7 @@ export function News() {
           >
             <div
               className="absolute inset-0 bg-cover bg-center opacity-45 transition duration-700 group-hover:scale-105 group-hover:opacity-55"
-              style={{ backgroundImage: "url(/images/contact-bg.jpg)" }}
+              style={{ backgroundImage: `url(${asset("/images/contact-bg.jpg")})` }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/70 to-navy/20" />
             <div className="relative z-10">
