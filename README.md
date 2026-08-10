@@ -17,7 +17,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Build (local)
+## Build
 
 ```bash
 npm run build
@@ -25,22 +25,43 @@ npm run build
 
 Static files are written to `out/`.
 
-## Deploy
-
-### GitHub Pages
-
-Pushes to `main` deploy automatically via GitHub Actions.
-
-Site URL: [https://pjbumitech.github.io/website/](https://pjbumitech.github.io/website/)
-
-Local production build for Pages:
+For GitHub Pages builds:
 
 ```bash
 GITHUB_PAGES=true npm run build
 ```
 
-### Notes
+## Deploy (GitHub Pages)
 
-- Imagery is stored under `public/images/`.
-- Contact form currently validates client-side only; wire it to your preferred mail/API endpoint before production use.
-- Project status lives at `/internal/projects` for internal use only (not linked from the public nav; blocked in `robots.txt`).
+Repo: [https://github.com/PJBUMITech/website](https://github.com/PJBUMITech/website)
+
+Expected site URL: [https://pjbumitech.github.io/website/](https://pjbumitech.github.io/website/)
+
+### One-time setup (required)
+
+GitHub Pages is currently blocked because the repository is **private**. On the free org plan, Pages needs a public repo.
+
+1. Open **Settings → General → Danger Zone** and set visibility to **Public**  
+   or run: `gh repo edit PJBUMITech/website --visibility public`
+2. Open **Settings → Pages**
+3. Set source to **Deploy from a branch**
+4. Branch: **`gh-pages`** / folder: **`/`** → Save
+
+The `gh-pages` branch already contains the built site.
+
+### Redeploy after changes
+
+```bash
+GITHUB_PAGES=true npm run build
+npx gh-pages -d out -m "Deploy site to GitHub Pages"
+```
+
+### Optional: Actions workflow
+
+`.github/workflows/deploy-pages.yml` is ready locally. To push it, your GitHub token needs the `workflow` scope (`gh auth refresh -s workflow`).
+
+## Notes
+
+- Imagery is under `public/images/`.
+- Contact form is client-side only for now.
+- Internal project status: `/internal/projects` (not linked publicly).
