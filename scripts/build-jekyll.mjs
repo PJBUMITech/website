@@ -1,0 +1,160 @@
+#!/usr/bin/env node
+/**
+ * Build the Jekyll static site for GitHub Pages / custom domain.
+ *
+ * 1. Runs Next.js build to compile Tailwind CSS into a single chunk
+ * 2. Copies CSS, fonts, images, and site.js into jekyll/assets/
+ * 3. Runs `bundle exec jekyll build`
+ *
+ * Env:
+ *   JEKYLL_PROFILE=pages|domain  (default: pages)
+ */
+
+import { execSync } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const root = path.resolve(__dirname, "..");
+const jekyllDir = path.join(root, "jekyll");
+const profile = process.env.JEKYLL_PROFILE === "domain" ? "domain" : "pages";
+
+const configFiles = {
+  pages: ["_config.yml", "_config.pages.yml"],
+  domain: ["_config.yml", "_config.domain.yml"],
+};
+
+function log(step, message) {
+  console.log(`\n[build-jekyll] ${step}: ${message}`);
+}
+
+function run(cmd, cwd = root) {
+  console.log(`> ${cmd}`);
+  execSync(cmd, { stdio: "inherit", cwd });
+}
+
+function ensureDir(dir) {
+  fs.mkdirSync(dir, { recursive: true });
+}
+
+function copyFile(src, dest) {
+  ensureDir(path.dirname(dest));
+  fs.copyFileSync(src, dest);
+}
+
+function findCssChunk() {
+  const chunksDir = path.join(root, "out", "_next", "static", "chunks");
+  if (!fs.existsSync(chunksDir)) {
+    throw new Error("Missing out/_next/static/chunks — run Next build first");
+  }
+
+  const cssFiles = fs
+    .readdirSync(chunksDir)
+    .filter((name) => name.endsWith(".css"))
+    .sort();
+
+  if (cssFiles.length === 0) {
+    throw new Error("No CSS chunk found in out/_next/static/chunks");
+  }
+
+  return path.join(chunksDir, cssFiles[0]);
+}
+
+function syncAssets() {
+  log("assets", "Syncing CSS, fonts, images, and scripts");
+
+  const cssSrc = findCssChunk();
+  const cssDest = path.join(jekyllDir, "assets", "css", "site.css");
+  copyFile(cssSrc, cssDest);
+
+  let css = fs.readFileSync(cssDest, "utf8");
+  css = css.replace(/\/_next\/static\/media\//g, "../fonts/");
+  css = css.replace(/\.\/_next\/static\/media\//g, "../fonts/");
+  fs.writeFileSync(cssDest, css);
+
+  const mediaDir = path.join(root, "out", "_next", "static", "media");
+  const fontsDest = path.join(jekyllDir, "assets", "fonts");
+  ensureDir(fontsDest);
+
+  if (fs.existsSync(mediaDir)) {
+    for (const file of fs.readdirSync(mediaDir)) {
+      if (file.endsWith(".woff2")) {
+        copyFile(path.join(mediaDir, file), path.join(fontsDest, file));
+      }
+    }
+  }
+
+  const imagesSrc = path.join(root, "public", "images");
+  const imagesDest = path.join(jekyllDir, "assets", "images");
+  ensureDir(imagesDest);
+
+  if (fs.existsSync(imagesSrc)) {
+    for (const file of fs.readdirSync(imagesSrc)) {
+      const src = path.join(imagesSrc, file);
+      if (fs.statSync(src).isFile()) {
+        copyFile(src, path.join(imagesDest, file));
+      }
+    }
+  }
+
+  copyFile(
+    path.join(root, "public", "site.js"),
+    path.join(jekyllDir, "assets", "js", "site.js"),
+  );
+
+  const faviconCandidates = [
+    path.join(root, "src", "app", "favicon.ico"),
+    path.join(root, "public", "favicon.ico"),
+  ];
+  const favicon = faviconCandidates.find((candidate) =>
+    fs.existsSync(candidate),
+  );
+  if (favicon) {
+    copyFile(favicon, path.join(jekyllDir, "assets", "favicon.ico"));
+  }
+
+  const cnameDest = path.join(jekyllDir, "CNAME");
+  if (profile === "domain") {
+    const cnameSrc = path.join(root, "public", "CNAME");
+    if (fs.existsSync(cnameSrc)) {
+      copyFile(cnameSrc, cnameDest);
+    } else {
+      console.warn(
+        "[build-jekyll] Warning: public/CNAME not found for domain profile",
+      );
+    }
+  } else if (fs.existsSync(cnameDest)) {
+    fs.unlinkSync(cnameDest);
+  }
+}
+
+function buildJekyll() {
+  log("jekyll", `Building with profile "${profile}"`);
+
+  if (!fs.existsSync(path.join(jekyllDir, "Gemfile"))) {
+    throw new Error("Missing jekyll/Gemfile");
+  }
+
+  run("bundle install", jekyllDir);
+
+  const configArg = configFiles[profile]
+    .map((file) => path.join(jekyllDir, file))
+    .join(",");
+
+  run(`bundle exec jekyll build --config ${configArg}`, jekyllDir);
+}
+
+function main() {
+  log("start", `Jekyll build (profile: ${profile})`);
+
+  log("next", "Building Next.js to compile Tailwind CSS");
+  run("npm run build");
+
+  syncAssets();
+  buildJekyll();
+
+  log("done", `Output: jekyll/_site`);
+}
+
+main();

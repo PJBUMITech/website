@@ -19,6 +19,7 @@
 
 # production
 /build
+/pjbumi-tech-cpanel.zip
 
 # misc
 .DS_Store
@@ -57,3 +58,15 @@ public/images/hydrogen-genset-presentable.png
 public/images/hydrogen-tech.jpg
 public/images/space-capsule.jpg
 public/images.zip
+
+# jekyll generated assets and build output
+/jekyll/_site/
+/jekyll/.jekyll-cache/
+/jekyll/vendor/
+/jekyll/assets/css/
+/jekyll/assets/fonts/
+/jekyll/assets/images/
+/jekyll/assets/js/
+/jekyll/assets/favicon.ico
+/jekyll/CNAME
+/jekyll/Gemfile.lock

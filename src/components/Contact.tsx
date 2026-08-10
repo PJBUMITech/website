@@ -4,7 +4,7 @@ import { SiteImage as Image } from "@/components/SiteImage";
 import { FormEvent, useState } from "react";
 
 const CONTACT_EMAIL =
-  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "info@pjbumitech.com";
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "inquiries@pjbumitech.com";
 
 const offices = [
   {
@@ -46,7 +46,6 @@ export function Contact() {
     const form = event.currentTarget;
     const data = new FormData(form);
 
-    // Honeypot — bots fill this; humans leave it empty
     if (String(data.get("_gotcha") ?? "").trim()) {
       setStatus("success");
       form.reset();

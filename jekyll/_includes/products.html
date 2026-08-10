@@ -1,0 +1,50 @@
+<section id="products" class="bg-white py-20 sm:py-28">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div class="max-w-2xl">
+        <p class="section-eyebrow">Our Products</p>
+        <h2 class="mt-3 font-[family-name:var(--font-sora)] text-3xl font-semibold tracking-tight text-navy sm:text-4xl">
+          Technology that extends reach and endurance
+        </h2>
+      </div>
+      <p class="max-w-sm text-sm leading-relaxed text-muted sm:text-right">
+        Solutions engineered for real-world operations across aerospace, energy, and scientific research.
+      </p>
+    </div>
+
+    <div class="mt-14 space-y-16 sm:space-y-24">
+      {% for product in site.data.products %}
+      {% assign reverse = forloop.index0 | modulo: 2 %}
+      {% assign is_contain = product.fit == "contain" %}
+      <article class="grid items-center gap-8 lg:grid-cols-2 lg:gap-14{% if reverse == 1 %} lg:[&>*:first-child]:order-2{% endif %}">
+        <div class="relative overflow-hidden rounded-sm{% if is_contain %} aspect-[3/4] bg-navy shadow-[0_20px_50px_rgba(11,22,40,0.18)] sm:aspect-[3/4]{% else %} aspect-[16/11]{% endif %}">
+          <img
+            src="{{ '/assets/images/' | append: product.image | relative_url }}"
+            alt="{{ product.alt }}"
+            class="absolute inset-0 h-full w-full{% if is_contain %} object-contain p-3 sm:p-4{% else %} object-cover{% endif %}"
+            loading="lazy"
+          />
+          {% unless is_contain %}
+            {% if product.overlay %}
+            <div class="absolute inset-0 bg-gradient-to-tr from-navy/35 to-transparent"></div>
+            {% endif %}
+          {% endunless %}
+        </div>
+        <div>
+          <p class="section-eyebrow">{{ product.tag }}</p>
+          <h3 class="mt-3 font-[family-name:var(--font-sora)] text-2xl font-semibold tracking-tight text-navy sm:text-3xl">{{ product.title }}</h3>
+          <p class="mt-4 text-base leading-relaxed text-muted">{{ product.body }}</p>
+          <ul class="mt-6 space-y-2.5">
+            {% for point in product.points %}
+            <li class="flex items-start gap-3 text-sm text-navy/85">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+              {{ point }}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>

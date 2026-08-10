@@ -5,6 +5,16 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:cpanel": "rm -rf .next out pjbumi-tech-cpanel.zip && CPANEL=true next build && node scripts/fix-cpanel-export.mjs && cd out && zip -r -q ../pjbumi-tech-cpanel.zip . -x 'images.zip' -x '__next*' -x '*.txt'",
+    "build:pages": "GITHUB_PAGES=true next build && node scripts/fix-github-pages-export.mjs",
+    "build:pages:domain": "GITHUB_PAGES=true GITHUB_PAGES_CUSTOM_DOMAIN=true next build && node scripts/fix-github-pages-export.mjs",
+    "deploy:pages": "npm run build:pages && npx gh-pages@6 -d out -t -m \"Deploy to GitHub Pages\"",
+    "deploy:pages:domain": "npm run build:pages:domain && npx gh-pages@6 -d out -t -m \"Deploy to custom domain on GitHub Pages\"",
+    "build:jekyll": "node scripts/build-jekyll.mjs",
+    "build:jekyll:pages": "JEKYLL_PROFILE=pages node scripts/build-jekyll.mjs",
+    "build:jekyll:domain": "JEKYLL_PROFILE=domain node scripts/build-jekyll.mjs",
+    "deploy:jekyll:pages": "npm run build:jekyll:pages && npx gh-pages@6 -d jekyll/_site -t -m \"Deploy Jekyll site to GitHub Pages\"",
+    "deploy:jekyll:domain": "npm run build:jekyll:domain && npx gh-pages@6 -d jekyll/_site -t -m \"Deploy Jekyll site to custom domain\"",
     "start": "next start",
     "lint": "eslint"
   },

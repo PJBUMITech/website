@@ -1,0 +1,31 @@
+<section id="capabilities" class="bg-mist py-20 sm:py-28">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="max-w-2xl">
+      <p class="section-eyebrow">Our Focus</p>
+      <h2 class="mt-3 font-[family-name:var(--font-sora)] text-3xl font-semibold tracking-tight text-navy sm:text-4xl">
+        Three domains. One engineering standard.
+      </h2>
+      <p class="mt-4 text-base leading-relaxed text-muted sm:text-lg">
+        From Malaysia to Toulouse, we design and commercialize advanced systems at the intersection of aerospace, energy, and digital operations.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-6 md:grid-cols-3">
+      {% for item in site.data.pillars %}
+      <article class="group relative min-h-[22rem] overflow-hidden rounded-sm">
+        <img
+          src="{{ '/assets/images/' | append: item.image | relative_url }}"
+          alt="{{ item.alt }}"
+          class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
+          loading="lazy"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-navy via-navy/55 to-navy/15"></div>
+        <div class="absolute inset-x-0 bottom-0 p-6 sm:p-7">
+          <h3 class="font-[family-name:var(--font-sora)] text-xl font-semibold text-white">{{ item.title }}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-white/75">{{ item.copy }}</p>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>

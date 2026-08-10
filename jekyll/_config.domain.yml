@@ -1,0 +1,3 @@
+# Custom domain at site root (e.g. www.pjbumitech.com)
+baseurl: ""
+url: "https://www.pjbumitech.com"

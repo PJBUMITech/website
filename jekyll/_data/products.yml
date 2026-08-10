@@ -1,0 +1,42 @@
+- tag: Drones
+  title: Advanced Long-range Endurance Drones
+  body: >-
+    Powered by hybrid battery and hydrogen-electric systems for hours of
+    uninterrupted operation. Built for industrial monitoring, surveillance,
+    and remote logistics.
+  image: drone-regid-flying-v5.jpg
+  alt: ReGiD Mk-X3 hydrogen-powered long-range endurance drone flying outdoors
+  fit: cover
+  overlay: false
+  points:
+    - Hybrid / hydrogen-electric propulsion
+    - Industrial & remote monitoring ready
+    - Partnership with H3 Dynamics (France)
+
+- tag: Satellites
+  title: Advanced Communications Satellites
+  body: >-
+    IoT connectivity anywhere, everywhere—supporting energy, logistics,
+    agriculture, and defense with reliable coverage in remote locations.
+  image: satellite-tech.jpg
+  alt: Orbital satellite communications imagery
+  fit: cover
+  overlay: true
+  points:
+    - Seamless remote IoT connectivity
+    - Cube satellite development
+    - Cross-industry mission support
+
+- tag: Space Research
+  title: "MERCAP: Microgravity Experiment Capsule"
+  body: >-
+    Showcasing MERCAP by Independence-X Aerospace—a capsule built for biotech
+    and pharmaceutical experiments in Low Earth Orbit.
+  image: mercap-brochure-hq.jpg
+  alt: MERCAP microgravity experiment re-entry capsule brochure
+  fit: contain
+  overlay: false
+  points:
+    - 4–14 day LEO missions
+    - Hydrogen fuel cell power
+    - Real-time telemetry & safe re-entry

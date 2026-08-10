@@ -1,0 +1,66 @@
+{% assign featured = site.data.news | first %}
+{% assign rest = site.data.news | slice: 1, 100 %}
+
+<section id="news" class="bg-white py-20 sm:py-28">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div class="max-w-2xl">
+        <p class="section-eyebrow">News & Updates</p>
+        <h2 class="mt-3 font-[family-name:var(--font-sora)] text-3xl font-semibold tracking-tight text-navy sm:text-4xl">
+          Latest developments from PJBUMI Tech
+        </h2>
+      </div>
+      <p class="max-w-sm text-sm leading-relaxed text-muted sm:text-right">
+        Coverage of expansion, partnerships, and engineering milestones across aerospace and energy programmes.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+      <a
+        href="{{ featured.href }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group relative flex min-h-[22rem] flex-col justify-end overflow-hidden rounded-sm bg-navy p-7 sm:p-9"
+      >
+        <div
+          class="absolute inset-0 bg-cover bg-center opacity-45 transition duration-700 group-hover:scale-105 group-hover:opacity-55"
+          style="background-image: url('{{ '/assets/images/contact-bg.jpg' | relative_url }}')"
+        ></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-navy via-navy/70 to-navy/20"></div>
+        <div class="relative z-10">
+          <div class="flex flex-wrap items-center gap-3 text-[0.7rem] font-semibold uppercase tracking-[0.14em]">
+            <span class="text-brand">{{ featured.tag }}</span>
+            <span class="text-white/40">·</span>
+            <span class="text-white/55">{{ featured.source }}</span>
+            <span class="text-white/40">·</span>
+            <time class="text-white/55" datetime="{{ featured.date }}">{{ featured.display_date }}</time>
+          </div>
+          <h3 class="mt-4 font-[family-name:var(--font-sora)] text-2xl font-semibold leading-snug text-white sm:text-3xl">{{ featured.title }}</h3>
+          <p class="mt-3 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">{{ featured.summary }}</p>
+          <span class="mt-6 inline-flex text-sm font-semibold uppercase tracking-[0.12em] text-white transition group-hover:text-brand">Read article →</span>
+        </div>
+      </a>
+
+      <div class="flex flex-col divide-y divide-navy/10 border-y border-navy/10">
+        {% for item in rest %}
+        <a
+          href="{{ item.href }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group py-5 transition first:pt-0 last:pb-0 hover:bg-mist/60 sm:px-4"
+        >
+          <div class="flex flex-wrap items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.14em]">
+            <span class="text-brand">{{ item.tag }}</span>
+            <span class="text-muted/50">·</span>
+            <span class="text-muted">{{ item.source }}</span>
+            <span class="text-muted/50">·</span>
+            <time class="text-muted" datetime="{{ item.date }}">{{ item.display_date }}</time>
+          </div>
+          <h3 class="mt-2 font-[family-name:var(--font-sora)] text-base font-semibold leading-snug text-navy transition group-hover:text-brand sm:text-lg">{{ item.title }}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">{{ item.summary }}</p>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

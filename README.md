@@ -23,46 +23,154 @@ Open [http://localhost:3000](http://localhost:3000).
 npm run build
 ```
 
-Static files are written to `out/`.
+Static files are written to `out/` (root paths — cPanel or custom domain).
 
-For GitHub Pages builds:
-
-```bash
-GITHUB_PAGES=true npm run build
-```
+| Command | Use case |
+|---------|----------|
+| `npm run build:pages` | GitHub project URL: `https://<org>.github.io/website/` |
+| `npm run build:pages:domain` | Custom domain at root: `https://www.pjbumitech.com/` |
+| `npm run build:cpanel` | cPanel zip export |
+| `npm run build:jekyll:pages` | Jekyll site for `github.io/website/` |
+| `npm run build:jekyll:domain` | Jekyll site for custom domain |
 
 ## Deploy (GitHub Pages)
 
 Repo: [https://github.com/PJBUMITech/website](https://github.com/PJBUMITech/website)
 
-Expected site URL: [https://pjbumitech.github.io/website/](https://pjbumitech.github.io/website/)
+### Two deploy methods
 
-### One-time setup (required)
+| Method | Build | Best for |
+|--------|-------|----------|
+| **Next.js export** (default) | `build:pages` | Same stack as dev; React components are source of truth |
+| **Jekyll** | `build:jekyll:pages` | Native GitHub Pages pipeline; content in `jekyll/_data/` |
 
-GitHub Pages is currently blocked because the repository is **private**. On the free org plan, Pages needs a public repo.
+The Next.js export adds **`out/.nojekyll`** so GitHub does not run Jekyll over `_next/` assets. The Jekyll method builds a real Jekyll site under `jekyll/` (see `jekyll/README.md`).
 
-1. Open **Settings → General → Danger Zone** and set visibility to **Public**  
-   or run: `gh repo edit PJBUMITech/website --visibility public`
-2. Open **Settings → Pages**
-3. Set source to **Deploy from a branch**
-4. Branch: **`gh-pages`** / folder: **`/`** → Save
+### Option A — GitHub Actions (Next.js, recommended)
 
-The `gh-pages` branch already contains the built site.
+1. Push this repo to GitHub (public repo required on free org plan).
+2. **Settings → Pages → Build and deployment**
+   - Source: **GitHub Actions**
+3. Push to `main` — workflow `.github/workflows/deploy-pages.yml` builds and deploys automatically.
 
-### Redeploy after changes
+For a **custom domain** deploy via Actions: **Actions → Deploy to GitHub Pages → Run workflow** and check **Build for custom domain**.
+
+After your custom domain is live, edit the workflow so pushes to `main` always set `GITHUB_PAGES_CUSTOM_DOMAIN: "true"`.
+
+### Option B — Manual deploy (`gh-pages` branch)
+
+**Project URL** (`github.io/website/`):
 
 ```bash
-GITHUB_PAGES=true npm run build
-npx gh-pages -d out -m "Deploy site to GitHub Pages"
+npm run deploy:pages
 ```
 
-### Optional: Actions workflow
+**Custom domain** (after `public/CNAME` exists):
 
-`.github/workflows/deploy-pages.yml` is ready locally. To push it, your GitHub token needs the `workflow` scope (`gh auth refresh -s workflow`).
+```bash
+cp public/CNAME.example public/CNAME   # edit domain if needed
+npm run deploy:pages:domain
+```
+
+Then **Settings → Pages → Deploy from branch → `gh-pages` / `/`**.
+
+### Custom domain setup
+
+Target example: **`www.pjbumitech.com`** (or apex `pjbumitech.com`).
+
+#### 1. Create the CNAME file
+
+```bash
+cp public/CNAME.example public/CNAME
+```
+
+Edit `public/CNAME` to your chosen hostname (one line, no `https://`):
+
+```
+www.pjbumitech.com
+```
+
+Commit and deploy with **`npm run build:pages:domain`** (or Actions with custom domain checked).
+
+#### 2. DNS at your domain registrar
+
+**If using `www` (recommended):**
+
+| Type | Name | Value |
+|------|------|-------|
+| CNAME | `www` | `pjbumitech.github.io` |
+
+**If using apex `pjbumitech.com` (no www):**
+
+| Type | Name | Value |
+|------|------|-------|
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+
+(GitHub’s current Pages IP addresses — confirm in [GitHub Docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site).)
+
+#### 3. Configure GitHub
+
+1. **Settings → Pages → Custom domain** → enter `www.pjbumitech.com` → Save  
+2. Wait for DNS check (can take up to 24–48 hours, often minutes).  
+3. Enable **Enforce HTTPS** once the certificate is issued.
+
+#### 4. Build for custom domain
+
+Important: custom domains are served from the **site root**, not `/website/`. Always build with:
+
+```bash
+npm run build:pages:domain
+# or
+GITHUB_PAGES=true GITHUB_PAGES_CUSTOM_DOMAIN=true npm run build
+node scripts/fix-github-pages-export.mjs
+```
+
+Using the wrong build (`build:pages` without custom domain) will break CSS/JS on your domain.
+
+### Default project URL (no custom domain)
+
+Live preview: [https://pjbumitech.github.io/website/](https://pjbumitech.github.io/website/)
+
+```bash
+npm run deploy:pages
+```
+
+### Option C — Jekyll (manual or Actions)
+
+Requires Ruby 3.x. First time:
+
+```bash
+cd jekyll && bundle install && cd ..
+```
+
+**Project URL:**
+
+```bash
+npm run deploy:jekyll:pages
+```
+
+**Custom domain** (with `public/CNAME`):
+
+```bash
+npm run deploy:jekyll:domain
+```
+
+**GitHub Actions:** **Actions → Deploy to GitHub Pages (Jekyll) → Run workflow** — choose `pages` or `domain`. This workflow is manual only so it does not overwrite the default Next.js deploy on every push.
+
+## Deploy (cPanel)
+
+```bash
+npm run build:cpanel
+```
+
+Upload `pjbumi-tech-cpanel.zip` to `public_html` and extract. Confirm `index.html`, `next/`, `images/`, and `.htaccess` are at the document root.
 
 ## Notes
 
 - Imagery is under `public/images/`.
-- Contact form uses [FormSubmit](https://formsubmit.co) to email `info@pjbumitech.com` (override with `NEXT_PUBLIC_CONTACT_EMAIL`).
-  - First submission sends an activation link to that inbox — click it once to enable delivery.
+- Contact form uses [FormSubmit](https://formsubmit.co) → `inquiries@pjbumitech.com` (override with `NEXT_PUBLIC_CONTACT_EMAIL`).
+  - First submission sends an activation link — click it once to enable delivery.
 - Internal project status: `/internal/projects` (not linked publicly).

@@ -1,0 +1,30 @@
+title: PJBUMI Tech
+description: >-
+  PJBUMI Technologies integrates multi-disciplinary engineering and
+  cutting-edge technology across drones, satellites, hydrogen systems, and
+  space research.
+url: "https://pjbumitech.github.io"
+baseurl: ""
+contact_email: inquiries@pjbumitech.com
+
+markdown: kramdown
+theme: null
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-feed
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .jekyll-cache
+  - README.md
+  - _config.pages.yml
+  - _config.domain.yml
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
