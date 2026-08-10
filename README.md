@@ -53,9 +53,9 @@ The Next.js export adds **`out/.nojekyll`** so GitHub does not run Jekyll over `
    - Source: **GitHub Actions**
 3. Push to `main` — workflow `.github/workflows/deploy-pages.yml` builds and deploys automatically.
 
-For a **custom domain** deploy via Actions: **Actions → Deploy to GitHub Pages → Run workflow** and check **Build for custom domain**.
+Pushes to `main` build for the **custom domain root** (`pjbumitech.com`) by default.
 
-After your custom domain is live, edit the workflow so pushes to `main` always set `GITHUB_PAGES_CUSTOM_DOMAIN: "true"`.
+For the project URL (`github.io/website/`) instead: **Actions → Deploy to GitHub Pages → Run workflow** and check **Build for github.io/website/**.
 
 ### Option B — Manual deploy (`gh-pages` branch)
 

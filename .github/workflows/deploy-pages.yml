@@ -5,8 +5,8 @@ on:
     branches: [main]
   workflow_dispatch:
     inputs:
-      custom_domain:
-        description: Build for custom domain (no /website basePath)
+      project_url:
+        description: Build for github.io/website/ instead of custom domain root
         type: boolean
         default: false
 
@@ -35,14 +35,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # pjbumitech.com is served from the site root (no /website basePath).
+      # That is the default for every push to main.
       - name: Build static site
         env:
-          GITHUB_PAGES: "true"
-          GITHUB_PAGES_CUSTOM_DOMAIN: ${{ github.event_name == 'workflow_dispatch' && inputs.custom_domain && 'true' || '' }}
           NEXT_PUBLIC_CONTACT_EMAIL: ${{ vars.NEXT_PUBLIC_CONTACT_EMAIL || 'inquiries@pjbumitech.com' }}
         run: |
-          npm run build:pages
-          node scripts/fix-github-pages-export.mjs
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.project_url }}" = "true" ]; then
+            npm run build:pages
+          else
+            npm run build:pages:domain
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
