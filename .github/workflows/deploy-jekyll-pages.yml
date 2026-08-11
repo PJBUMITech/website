@@ -47,6 +47,8 @@ jobs:
         env:
           JEKYLL_PROFILE: ${{ inputs.profile }}
           NEXT_PUBLIC_CONTACT_EMAIL: ${{ vars.NEXT_PUBLIC_CONTACT_EMAIL || 'inquiries@pjbumitech.com' }}
+          NEXT_PUBLIC_CONTACT_PROVIDER: ${{ vars.NEXT_PUBLIC_CONTACT_PROVIDER || 'formsubmit' }}
+          NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ vars.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY }}
         run: node scripts/build-jekyll.mjs
 
       - name: Upload artifact

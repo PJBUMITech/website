@@ -21,6 +21,14 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_BASE_PATH: basePath,
     NEXT_PUBLIC_CONTACT_EMAIL:
       process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "inquiries@pjbumitech.com",
+    // formsubmit (default) | web3forms
+    NEXT_PUBLIC_CONTACT_PROVIDER:
+      process.env.NEXT_PUBLIC_CONTACT_PROVIDER === "web3forms"
+        ? "web3forms"
+        : "formsubmit",
+    // Required only when NEXT_PUBLIC_CONTACT_PROVIDER=web3forms
+    NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY:
+      process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "",
   },
   ...(isGithubPages && basePath
     ? {

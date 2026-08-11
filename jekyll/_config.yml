@@ -6,6 +6,9 @@ description: >-
 url: "https://pjbumitech.github.io"
 baseurl: ""
 contact_email: inquiries@pjbumitech.com
+# formsubmit (default) | web3forms
+contact_provider: formsubmit
+web3forms_access_key: ""
 
 markdown: kramdown
 theme: null

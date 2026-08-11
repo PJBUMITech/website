@@ -1,10 +1,8 @@
 "use client";
 
 import { SiteImage as Image } from "@/components/SiteImage";
+import { CONTACT_EMAIL, submitContactForm } from "@/lib/contactForm";
 import { FormEvent, useState } from "react";
-
-const CONTACT_EMAIL =
-  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "inquiries@pjbumitech.com";
 
 const offices = [
   {
@@ -29,7 +27,8 @@ const offices = [
     locations: [
       {
         title: "Toulouse",
-        address: "13 Rue Sainte Ursule 31000, Toulouse, France",
+        address:
+          "13 Rue Sainte Ursule 31000, Toulouse, France\nRCS Toulouse 107 926 883",
       },
     ],
   },
@@ -46,7 +45,8 @@ export function Contact() {
     const form = event.currentTarget;
     const data = new FormData(form);
 
-    if (String(data.get("_gotcha") ?? "").trim()) {
+    // Honeypot — treat as success without sending
+    if (String(data.get("botcheck") ?? data.get("_gotcha") ?? "").trim()) {
       setStatus("success");
       form.reset();
       return;
@@ -56,36 +56,11 @@ export function Contact() {
     setErrorMessage("");
 
     try {
-      const response = await fetch(
-        `https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_EMAIL)}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            name: data.get("name"),
-            email: data.get("email"),
-            message: data.get("message"),
-            _subject: "New inquiry from PJBUMI Tech website",
-            _template: "table",
-            _captcha: "false",
-          }),
-        },
-      );
-
-      const result = (await response.json().catch(() => null)) as {
-        success?: string | boolean;
-        message?: string;
-      } | null;
-
-      if (!response.ok) {
-        throw new Error(
-          result?.message ?? "Unable to send your message right now.",
-        );
-      }
-
+      await submitContactForm({
+        name: data.get("name"),
+        email: data.get("email"),
+        message: data.get("message"),
+      });
       setStatus("success");
       form.reset();
     } catch (error) {
@@ -139,9 +114,18 @@ export function Contact() {
 
         <div className="mt-12 grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
           <form
+            id="contact-form"
             onSubmit={onSubmit}
             className="space-y-4 rounded-sm border border-white/15 bg-white/5 p-6 sm:p-8"
           >
+            <input
+              type="checkbox"
+              name="botcheck"
+              tabIndex={-1}
+              autoComplete="off"
+              className="hidden"
+              aria-hidden
+            />
             <input
               type="text"
               name="_gotcha"
@@ -228,7 +212,7 @@ export function Contact() {
                       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand">
                         {location.title}
                       </p>
-                      <p className="mt-2 text-sm leading-relaxed text-white/70">
+                      <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-white/70">
                         {location.address}
                       </p>
                     </div>

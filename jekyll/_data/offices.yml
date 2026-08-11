@@ -14,4 +14,6 @@
   detail: France subsidiary
   locations:
     - title: Toulouse
-      address: 13 Rue Sainte Ursule 31000, Toulouse, France
+      address: |-
+        13 Rue Sainte Ursule 31000, Toulouse, France
+        RCS Toulouse 107 926 883

@@ -70,3 +70,4 @@ public/images.zip
 /jekyll/assets/favicon.ico
 /jekyll/CNAME
 /jekyll/Gemfile.lock
+/jekyll/_config.secrets.yml

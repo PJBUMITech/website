@@ -12,6 +12,11 @@ const outDir = path.resolve("out");
 const publicDir = path.resolve("public");
 const contactEmail =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "inquiries@pjbumitech.com";
+const contactProvider =
+  process.env.NEXT_PUBLIC_CONTACT_PROVIDER === "web3forms"
+    ? "web3forms"
+    : "formsubmit";
+const web3formsKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
 
 function walk(dir, onFile) {
   for (const name of fs.readdirSync(dir)) {
@@ -55,8 +60,16 @@ function injectIntoHtml(html) {
   if (!out.includes("data-contact-email")) {
     out = out.replace(
       /<body([^>]*)>/i,
-      `<body$1 data-contact-email="${contactEmail}">`,
+      `<body$1 data-contact-email="${contactEmail}" data-contact-provider="${contactProvider}" data-web3forms-key="${web3formsKey}">`,
     );
+  } else {
+    if (!out.includes("data-contact-provider")) {
+      out = out.replace(
+        /data-contact-email="[^"]*"/i,
+        (match) =>
+          `${match} data-contact-provider="${contactProvider}" data-web3forms-key="${web3formsKey}"`,
+      );
+    }
   }
   return out;
 }

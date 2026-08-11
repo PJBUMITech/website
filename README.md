@@ -171,6 +171,9 @@ Upload `pjbumi-tech-cpanel.zip` to `public_html` and extract. Confirm `index.htm
 ## Notes
 
 - Imagery is under `public/images/`.
-- Contact form uses [FormSubmit](https://formsubmit.co) → `inquiries@pjbumitech.com` (override with `NEXT_PUBLIC_CONTACT_EMAIL`).
-  - First submission sends an activation link — click it once to enable delivery.
+- Contact form provider is selected at **build time**:
+  - **Default:** [FormSubmit](https://formsubmit.co) → `NEXT_PUBLIC_CONTACT_EMAIL` (currently working).
+  - **Optional:** [Web3Forms](https://web3forms.com) — set `NEXT_PUBLIC_CONTACT_PROVIDER=web3forms` and `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY`.
+  - Local: copy `.env.example` → `.env.local`.
+  - GitHub Actions: set repo **Variables** `NEXT_PUBLIC_CONTACT_PROVIDER` / `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` (provider defaults to `formsubmit`).
 - Internal project status: `/internal/projects` (not linked publicly).

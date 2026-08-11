@@ -40,6 +40,8 @@ jobs:
       - name: Build static site
         env:
           NEXT_PUBLIC_CONTACT_EMAIL: ${{ vars.NEXT_PUBLIC_CONTACT_EMAIL || 'inquiries@pjbumitech.com' }}
+          NEXT_PUBLIC_CONTACT_PROVIDER: ${{ vars.NEXT_PUBLIC_CONTACT_PROVIDER || 'formsubmit' }}
+          NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ vars.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY }}
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.project_url }}" = "true" ]; then
             npm run build:pages

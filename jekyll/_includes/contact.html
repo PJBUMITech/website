@@ -26,7 +26,7 @@
 
     <div class="mt-12 grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
       <form id="contact-form" class="space-y-4 rounded-sm border border-white/15 bg-white/5 p-6 sm:p-8" novalidate>
-        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
         <label class="block">
           <span class="mb-2 block text-xs font-semibold uppercase tracking-[0.14em] text-white/55">Name</span>
           <input required name="name" class="w-full rounded-sm border border-white/20 bg-navy/40 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-brand disabled:opacity-60" placeholder="Your name" />
@@ -53,7 +53,7 @@
             {% for location in office.locations %}
             <div>
               <p class="text-xs font-semibold uppercase tracking-[0.14em] text-brand">{{ location.title }}</p>
-              <p class="mt-2 text-sm leading-relaxed text-white/70">{{ location.address }}</p>
+              <p class="mt-2 whitespace-pre-line text-sm leading-relaxed text-white/70">{{ location.address }}</p>
             </div>
             {% endfor %}
           </div>
