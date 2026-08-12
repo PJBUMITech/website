@@ -105,10 +105,10 @@ export function Contact() {
           </p>
           <p className="mt-5 text-sm text-white/80">
             <a
-              href="tel:+60378310075"
+              href="tel:+6023339201"
               className="transition hover:text-white"
             >
-              +603 - 7831 0075
+              +60 2 333 9201
             </a>
             <span className="mx-3 text-white/30">|</span>
             <a
