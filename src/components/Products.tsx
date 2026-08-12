@@ -1,6 +1,19 @@
 import { SiteImage as Image } from "@/components/SiteImage";
 
-const products = [
+type Product = {
+  tag: string;
+  title: string;
+  body: string;
+  image: string;
+  alt: string;
+  secondaryImage?: string;
+  secondaryAlt?: string;
+  fit: "cover" | "contain";
+  overlay: boolean;
+  points: string[];
+};
+
+const products: Product[] = [
   {
     tag: "Drones",
     title: "Advanced Long-range Endurance Drones",
