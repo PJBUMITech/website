@@ -33,14 +33,14 @@ const products: Product[] = [
   },
   {
     tag: "Satellites",
-    title: "Advanced Communications Satellites",
+    title: "Advanced Communication Satellites",
     body: "PNT connectivity anywhere, everywhere—supporting energy, logistics, agriculture, and defense with reliable coverage in remote locations.",
     image: "/images/satellite-tech.jpg",
-    alt: "Orbital satellite communications imagery",
+    alt: "Orbital satellite communication imagery",
     fit: "cover" as const,
     overlay: true,
     points: [
-      "Seamless remote IoT connectivity",
+      "Seamless remote PNT connectivity",
       "Cube satellite development",
       "Cross-industry mission support",
     ],
