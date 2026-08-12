@@ -6,6 +6,8 @@
     and remote logistics.
   image: drone-regid-flying-v5.jpg
   alt: ReGiD Mk-X3 hydrogen-powered long-range endurance drone flying outdoors
+  secondary_image: reqid-drone-on-field.jpeg
+  secondary_alt: ReGiD endurance drone prepared on field landing pad for remote operations
   fit: cover
   overlay: false
   points:
@@ -16,7 +18,7 @@
 - tag: Satellites
   title: Advanced Communications Satellites
   body: >-
-    IoT connectivity anywhere, everywhere—supporting energy, logistics,
+    PNT connectivity anywhere, everywhere—supporting energy, logistics,
     agriculture, and defense with reliable coverage in remote locations.
   image: satellite-tech.jpg
   alt: Orbital satellite communications imagery

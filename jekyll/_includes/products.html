@@ -17,7 +17,25 @@
       {% assign reverse = forloop.index0 | modulo: 2 %}
       {% assign is_contain = product.fit == "contain" %}
       <article class="grid items-center gap-8 lg:grid-cols-2 lg:gap-14{% if reverse == 1 %} lg:[&>*:first-child]:order-2{% endif %}">
-        <div class="relative overflow-hidden rounded-sm{% if is_contain %} aspect-[3/4] bg-navy shadow-[0_20px_50px_rgba(11,22,40,0.18)] sm:aspect-[3/4]{% else %} aspect-[16/11]{% endif %}">
+        <div class="{% if product.secondary_image %}grid gap-3{% else %}relative overflow-hidden rounded-sm{% if is_contain %} aspect-[3/4] bg-navy shadow-[0_20px_50px_rgba(11,22,40,0.18)] sm:aspect-[3/4]{% else %} aspect-[16/11]{% endif %}{% endif %}">
+          {% if product.secondary_image %}
+          <div class="relative aspect-[16/10] overflow-hidden rounded-sm">
+            <img
+              src="{{ '/assets/images/' | append: product.image | relative_url }}"
+              alt="{{ product.alt }}"
+              class="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          <div class="relative aspect-[16/9] overflow-hidden rounded-sm sm:aspect-[16/8]">
+            <img
+              src="{{ '/assets/images/' | append: product.secondary_image | relative_url }}"
+              alt="{{ product.secondary_alt | default: product.alt }}"
+              class="absolute inset-0 h-full w-full object-cover object-center"
+              loading="lazy"
+            />
+          </div>
+          {% else %}
           <img
             src="{{ '/assets/images/' | append: product.image | relative_url }}"
             alt="{{ product.alt }}"
@@ -29,6 +47,7 @@
             <div class="absolute inset-0 bg-gradient-to-tr from-navy/35 to-transparent"></div>
             {% endif %}
           {% endunless %}
+          {% endif %}
         </div>
         <div>
           <p class="section-eyebrow">{{ product.tag }}</p>

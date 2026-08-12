@@ -33,7 +33,8 @@ export function Hero() {
           </h1>
           <p className="animate-fade-up-delay-1 mt-6 max-w-xl text-lg leading-relaxed text-white/78 sm:text-xl">
             Integrating expertise across multi-disciplinary engineering and
-            cutting-edge technology in a distinctive way.
+            cutting-edge technology—with hydrogen systems that power next-generation
+            aerospace, energy, and endurance platforms.
           </p>
           <div className="animate-fade-up-delay-2 mt-10 flex flex-wrap items-center gap-3">
             <a

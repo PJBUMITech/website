@@ -7,6 +7,9 @@ const products = [
     body: "Powered by hybrid battery and hydrogen-electric systems for hours of uninterrupted operation. Built for industrial monitoring, surveillance, and remote logistics.",
     image: "/images/drone-regid-flying-v5.jpg",
     alt: "ReGiD Mk-X3 hydrogen-powered long-range endurance drone flying outdoors",
+    secondaryImage: "/images/reqid-drone-on-field.jpeg",
+    secondaryAlt:
+      "ReGiD endurance drone prepared on field landing pad for remote operations",
     fit: "cover" as const,
     overlay: false,
     points: [
@@ -18,7 +21,7 @@ const products = [
   {
     tag: "Satellites",
     title: "Advanced Communications Satellites",
-    body: "IoT connectivity anywhere, everywhere—supporting energy, logistics, agriculture, and defense with reliable coverage in remote locations.",
+    body: "PNT connectivity anywhere, everywhere—supporting energy, logistics, agriculture, and defense with reliable coverage in remote locations.",
     image: "/images/satellite-tech.jpg",
     alt: "Orbital satellite communications imagery",
     fit: "cover" as const,
@@ -74,24 +77,57 @@ export function Products() {
                 }`}
               >
                 <div
-                  className={`relative overflow-hidden rounded-sm ${
-                    isContain
-                      ? "aspect-[3/4] bg-navy shadow-[0_20px_50px_rgba(11,22,40,0.18)] sm:aspect-[3/4]"
-                      : "aspect-[16/11]"
-                  }`}
+                  className={
+                    product.secondaryImage
+                      ? "grid gap-3"
+                      : `relative overflow-hidden rounded-sm ${
+                          isContain
+                            ? "aspect-[3/4] bg-navy shadow-[0_20px_50px_rgba(11,22,40,0.18)] sm:aspect-[3/4]"
+                            : "aspect-[16/11]"
+                        }`
+                  }
                 >
-                  <Image
-                    src={product.image}
-                    alt={product.alt}
-                    fill
-                    className={
-                      isContain ? "object-contain p-3 sm:p-4" : "object-cover"
-                    }
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    quality={90}
-                  />
-                  {!isContain && product.overlay && (
-                    <div className="absolute inset-0 bg-gradient-to-tr from-navy/35 to-transparent" />
+                  {product.secondaryImage ? (
+                    <>
+                      <div className="relative aspect-[16/10] overflow-hidden rounded-sm">
+                        <Image
+                          src={product.image}
+                          alt={product.alt}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 1024px) 100vw, 50vw"
+                          quality={90}
+                        />
+                      </div>
+                      <div className="relative aspect-[16/9] overflow-hidden rounded-sm sm:aspect-[16/8]">
+                        <Image
+                          src={product.secondaryImage}
+                          alt={product.secondaryAlt ?? product.alt}
+                          fill
+                          className="object-cover object-center"
+                          sizes="(max-width: 1024px) 100vw, 50vw"
+                          quality={90}
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <Image
+                        src={product.image}
+                        alt={product.alt}
+                        fill
+                        className={
+                          isContain
+                            ? "object-contain p-3 sm:p-4"
+                            : "object-cover"
+                        }
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        quality={90}
+                      />
+                      {!isContain && product.overlay && (
+                        <div className="absolute inset-0 bg-gradient-to-tr from-navy/35 to-transparent" />
+                      )}
+                    </>
                   )}
                 </div>
                 <div>

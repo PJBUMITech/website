@@ -1,4 +1,5 @@
-- entity: PJBUMI Technologies Sdn. Bhd.
+- entity_name: PJBUMI Technologies
+  entity_suffix: Sdn. Bhd.
   detail: "Company No: 201701036428 (1250599-D)"
   locations:
     - title: Kuala Lumpur
@@ -6,14 +7,17 @@
       address: >-
         Unit 22-1 Level 22, MOF Inc. Tower, Platinum Park, No 9 Persiaran KLCC,
         50088 Kuala Lumpur, Malaysia
+      phone: "+60 6 672 0808"
     - title: Sendayan
       designation: Technology Facility
       address: >-
         218, Jalan Sendayan Metropark 2/3, Sendayan Metropark, 71950 Seremban,
         Negeri Sembilan, Malaysia
+      phone: "+60 6 672 0808"
 
-- entity: PJBUMI Technologies SAS
-  detail: France subsidiary
+- entity_name: PJBUMI Technologies
+  entity_suffix: SAS
+  detail: "Company No: RCS Toulouse 107 926 883"
   locations:
     - title: Toulouse
       designation: Global Tech Center

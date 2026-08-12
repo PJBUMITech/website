@@ -6,7 +6,8 @@ import { FormEvent, useState } from "react";
 
 const offices = [
   {
-    entity: "PJBUMI Technologies Sdn. Bhd.",
+    entityName: "PJBUMI Technologies",
+    entitySuffix: "Sdn. Bhd.",
     detail: "Company No: 201701036428 (1250599-D)",
     locations: [
       {
@@ -14,17 +15,20 @@ const offices = [
         designation: "Corporate Office",
         address:
           "Unit 22-1 Level 22, MOF Inc. Tower, Platinum Park, No 9 Persiaran KLCC, 50088 Kuala Lumpur, Malaysia",
+        phone: "+60 2 333 9201",
       },
       {
         title: "Sendayan",
         designation: "Technology Facility",
         address:
           "218, Jalan Sendayan Metropark 2/3, Sendayan Metropark, 71950 Seremban, Negeri Sembilan, Malaysia",
+        phone: "+60 6 672 0808",
       },
     ],
   },
   {
-    entity: "PJBUMI Technologies SAS",
+    entityName: "PJBUMI Technologies",
+    entitySuffix: "SAS",
     detail: "Company No: RCS Toulouse 107 926 883",
     locations: [
       {
@@ -205,9 +209,12 @@ export function Contact() {
 
           <div className="grid gap-8 sm:grid-cols-2 sm:gap-10">
             {offices.map((office) => (
-              <div key={office.entity}>
+              <div key={`${office.entityName}-${office.entitySuffix}`}>
                 <h3 className="font-[family-name:var(--font-sora)] text-lg font-semibold text-white">
-                  {office.entity}
+                  <span className="block">{office.entityName}</span>
+                  <span className="mt-0.5 block text-base font-semibold text-white/90">
+                    {office.entitySuffix}
+                  </span>
                 </h3>
                 <p className="mt-1 text-sm text-white/50">{office.detail}</p>
                 <div className="mt-4 space-y-5">

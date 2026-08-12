@@ -47,7 +47,10 @@
       <div class="grid gap-8 sm:grid-cols-2 sm:gap-10">
         {% for office in site.data.offices %}
         <div>
-          <h3 class="font-[family-name:var(--font-sora)] text-lg font-semibold text-white">{{ office.entity }}</h3>
+          <h3 class="font-[family-name:var(--font-sora)] text-lg font-semibold text-white">
+            <span class="block">{{ office.entity_name }}</span>
+            <span class="mt-0.5 block text-base font-semibold text-white/90">{{ office.entity_suffix }}</span>
+          </h3>
           <p class="mt-1 text-sm text-white/50">{{ office.detail }}</p>
           <div class="mt-4 space-y-5">
             {% for location in office.locations %}
