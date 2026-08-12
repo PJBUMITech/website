@@ -114,6 +114,19 @@ function syncAssets() {
     copyFile(favicon, path.join(jekyllDir, "assets", "favicon.ico"));
   }
 
+  for (const name of [
+    "favicon-16x16.png",
+    "favicon-32x32.png",
+    "apple-touch-icon.png",
+    "icon-192.png",
+    "icon-512.png",
+  ]) {
+    const src = path.join(root, "public", name);
+    if (fs.existsSync(src)) {
+      copyFile(src, path.join(jekyllDir, "assets", name));
+    }
+  }
+
   const cnameDest = path.join(jekyllDir, "CNAME");
   if (profile === "domain") {
     const cnameSrc = path.join(root, "public", "CNAME");

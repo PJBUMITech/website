@@ -71,3 +71,6 @@ public/images.zip
 /jekyll/CNAME
 /jekyll/Gemfile.lock
 /jekyll/_config.secrets.yml
+
+# temp icon render output
+/tmp-icons/

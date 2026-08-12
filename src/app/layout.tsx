@@ -18,6 +18,14 @@ export const metadata: Metadata = {
   title: "PJBUMI Tech | Aerospace, Drone & Hydrogen Technology",
   description:
     "PJBUMI Technologies integrates multi-disciplinary engineering and cutting-edge technology across drones, satellites, hydrogen systems, and space research.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+  },
   openGraph: {
     title: "PJBUMI Tech",
     description:
@@ -25,6 +33,7 @@ export const metadata: Metadata = {
     url: "https://pjbumitech.com",
     siteName: "PJBUMI Tech",
     type: "website",
+    images: [{ url: "/images/PJBUMI-tech-logo.png", width: 512, height: 512 }],
   },
 };
 

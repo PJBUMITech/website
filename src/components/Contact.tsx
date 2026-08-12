@@ -11,11 +11,13 @@ const offices = [
     locations: [
       {
         title: "Kuala Lumpur",
+        designation: "Corporate Office",
         address:
           "Unit 22-1 Level 22, MOF Inc. Tower, Platinum Park, No 9 Persiaran KLCC, 50088 Kuala Lumpur, Malaysia",
       },
       {
-        title: "Seremban",
+        title: "Sendayan",
+        designation: "Technology Facility",
         address:
           "218, Jalan Sendayan Metropark 2/3, Sendayan Metropark, 71950 Seremban, Negeri Sembilan, Malaysia",
       },
@@ -23,12 +25,13 @@ const offices = [
   },
   {
     entity: "PJBUMI Technologies SAS",
-    detail: "France subsidiary",
+    detail: "Company No: RCS Toulouse 107 926 883",
     locations: [
       {
         title: "Toulouse",
+        designation: "Global Tech Center",
         address:
-          "13 Rue Sainte Ursule 31000, Toulouse, France\nRCS Toulouse 107 926 883",
+          "13 Rue Sainte Ursule 31000, Toulouse, France",
       },
     ],
   },
@@ -199,18 +202,21 @@ export function Contact() {
             )}
           </form>
 
-          <div className="space-y-8">
+          <div className="grid gap-8 sm:grid-cols-2 sm:gap-10">
             {offices.map((office) => (
               <div key={office.entity}>
                 <h3 className="font-[family-name:var(--font-sora)] text-lg font-semibold text-white">
                   {office.entity}
                 </h3>
                 <p className="mt-1 text-sm text-white/50">{office.detail}</p>
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <div className="mt-4 space-y-5">
                   {office.locations.map((location) => (
                     <div key={location.title}>
                       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand">
                         {location.title}
+                      </p>
+                      <p className="mt-1 text-sm font-medium text-white/85">
+                        {location.designation}
                       </p>
                       <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-white/70">
                         {location.address}

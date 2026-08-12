@@ -2,10 +2,12 @@
   detail: "Company No: 201701036428 (1250599-D)"
   locations:
     - title: Kuala Lumpur
+      designation: Corporate Office
       address: >-
         Unit 22-1 Level 22, MOF Inc. Tower, Platinum Park, No 9 Persiaran KLCC,
         50088 Kuala Lumpur, Malaysia
-    - title: Seremban
+    - title: Sendayan
+      designation: Technology Facility
       address: >-
         218, Jalan Sendayan Metropark 2/3, Sendayan Metropark, 71950 Seremban,
         Negeri Sembilan, Malaysia
@@ -14,6 +16,7 @@
   detail: France subsidiary
   locations:
     - title: Toulouse
+      designation: Global Tech Center
       address: |-
         13 Rue Sainte Ursule 31000, Toulouse, France
         RCS Toulouse 107 926 883

@@ -37,10 +37,11 @@ export function About() {
           </h2>
           <p className="mt-5 text-base leading-relaxed text-muted">
             PJBUMI Technologies Sdn. Bhd. is a wholly-owned subsidiary of PJBumi
-            Berhad, focused on unmanned aerial systems, satellite connectivity,
-            hydrogen energy, and space research. With offices in Kuala Lumpur,
-            Seremban, and Toulouse, we connect regional manufacturing strength
-            with European aerospace expertise.
+            Berhad, a public listed company on Bursa Malaysia, focused on
+            unmanned aerial systems, satellite connectivity, hydrogen energy,
+            and space research. With offices in Kuala Lumpur, Sendayan, and
+            Toulouse, we connect regional manufacturing strength with European
+            aerospace expertise.
           </p>
           <p className="mt-4 text-base leading-relaxed text-muted">
             Our programmes include hydrogen-electric UAVs with H3 Dynamics,
