@@ -55,6 +55,11 @@
               <p class="text-xs font-semibold uppercase tracking-[0.14em] text-brand">{{ location.title }}</p>
               <p class="mt-1 text-sm font-medium text-white/85">{{ location.designation }}</p>
               <p class="mt-2 whitespace-pre-line text-sm leading-relaxed text-white/70">{{ location.address }}</p>
+              {% if location.phone %}
+              <p class="mt-2 text-sm text-white/70">
+                <a href="tel:{{ location.phone | replace: ' ', '' }}" class="transition hover:text-white">{{ location.phone }}</a>
+              </p>
+              {% endif %}
             </div>
             {% endfor %}
           </div>

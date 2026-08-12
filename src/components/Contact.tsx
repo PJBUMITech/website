@@ -32,6 +32,7 @@ const offices = [
         designation: "Global Tech Center",
         address:
           "13 Rue Sainte Ursule 31000, Toulouse, France",
+        phone: "+33 6 75 43 56 69",
       },
     ],
   },
@@ -221,6 +222,16 @@ export function Contact() {
                       <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-white/70">
                         {location.address}
                       </p>
+                      {"phone" in location && location.phone && (
+                        <p className="mt-2 text-sm text-white/70">
+                          <a
+                            href={`tel:${location.phone.replace(/\s/g, "")}`}
+                            className="transition hover:text-white"
+                          >
+                            {location.phone}
+                          </a>
+                        </p>
+                      )}
                     </div>
                   ))}
                 </div>

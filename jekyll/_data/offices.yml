@@ -17,6 +17,5 @@
   locations:
     - title: Toulouse
       designation: Global Tech Center
-      address: |-
-        13 Rue Sainte Ursule 31000, Toulouse, France
-        RCS Toulouse 107 926 883
+      address: 13 Rue Sainte Ursule 31000, Toulouse, France
+      phone: "+33 6 75 43 56 69"
