@@ -1,0 +1,32 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "{{ site.url }}{{ site.baseurl }}/#organization",
+      "name": "PJBUMI Tech",
+      "legalName": "PJBUMI Technologies Sdn. Bhd.",
+      "url": "{{ site.url }}{{ site.baseurl }}/",
+      "logo": "{{ '/assets/images/PJBUMI-tech-logo.png' | absolute_url }}",
+      "email": "{{ site.contact_email }}",
+      "telephone": "+60378310075",
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "PJBumi Berhad",
+        "url": "https://www.pjbumi.com.my"
+      },
+      "sameAs": ["https://www.pjbumi.com.my"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "{{ site.url }}{{ site.baseurl }}/#website",
+      "url": "{{ site.url }}{{ site.baseurl }}/",
+      "name": "PJBUMI Tech",
+      "description": {{ site.description | jsonify }},
+      "publisher": { "@id": "{{ site.url }}{{ site.baseurl }}/#organization" },
+      "inLanguage": "en"
+    }
+  ]
+}
+</script>

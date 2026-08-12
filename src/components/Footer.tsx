@@ -20,8 +20,9 @@ export function Footer() {
             </span>
           </a>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
-            A subsidiary of PJBumi Berhad delivering aerospace, hydrogen, and
-            advanced engineering solutions across Asia and Europe.
+            A subsidiary of PJBumi Berhad, a public listed company on Bursa
+            Malaysia, delivering aerospace, hydrogen, and advanced engineering
+            solutions across Asia and Europe.
           </p>
         </div>
 

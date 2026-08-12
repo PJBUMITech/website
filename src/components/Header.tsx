@@ -30,7 +30,11 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:h-20 sm:px-8">
-        <a href="#top" className="group flex items-baseline gap-0.5">
+        <a
+          href="#top"
+          aria-label="PJBUMI Tech home"
+          className="group flex items-baseline gap-0.5"
+        >
           <span className="font-[family-name:var(--font-sora)] text-xl font-semibold tracking-tight text-brand sm:text-2xl">
             PJBUMI
           </span>

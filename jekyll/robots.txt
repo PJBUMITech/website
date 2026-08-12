@@ -1,0 +1,9 @@
+---
+permalink: /robots.txt
+---
+User-Agent: *
+Allow: /
+Disallow: /internal/
+
+Sitemap: {{ site.url }}{{ site.baseurl }}/sitemap.xml
+Host: {{ site.url }}

@@ -8,7 +8,7 @@ export function Hero() {
     >
       <Image
         src="/images/hero-earth.jpg"
-        alt="Earth viewed from orbit"
+        alt="Earth from orbit representing PJBUMI Tech aerospace and satellite programmes"
         fill
         priority
         className="object-cover object-center"
@@ -20,17 +20,19 @@ export function Hero() {
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8">
         <div className="max-w-2xl">
-          <h1 className="animate-fade-up">
-            <span className="sr-only">Independence-X Aerospace</span>
+          <h1 className="sr-only">
+            PJBUMI Tech — aerospace, drone, satellite and hydrogen technology
+          </h1>
+          <p className="animate-fade-up">
             <Image
               src="/images/idxa-logo.png"
-              alt="Independence-X Aerospace"
+              alt="Independence-X Aerospace, partner of PJBUMI Tech"
               width={827}
               height={125}
               priority
               className="h-auto w-[min(100%,28rem)] sm:w-[min(100%,34rem)]"
             />
-          </h1>
+          </p>
           <p className="animate-fade-up-delay-1 mt-6 max-w-xl text-lg leading-relaxed text-white/78 sm:text-xl">
             Integrating expertise across multi-disciplinary engineering and
             cutting-edge technology—with hydrogen systems that power next-generation
